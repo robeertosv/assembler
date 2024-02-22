@@ -10,7 +10,6 @@
     name: .space 10
     age: .space 10
     TAB: .ascii "\t"
-    LF: .ascii "\n"
 
     dir: .string "./data.txt"
 .text
@@ -73,12 +72,6 @@ movl $age, %ecx
 movl %edi, %edx
 int $0x80
 
-movl $4, %eax
-movl %ebp, %ebx
-movl $LF, %ecx
-movl $1, %edx
-int $0x80
-
 movl $6, %eax
 movl %ebp, %ebx
 int $0x80
@@ -95,7 +88,8 @@ movl $res, %ecx
 movl $2, %edx
 int $0x80
 
-cmpl $'S\n', res
+mov $0, %esi
+cmpb $'S', res(%esi)
 je end
 jne _start
 
